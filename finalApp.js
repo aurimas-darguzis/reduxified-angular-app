@@ -1,5 +1,4 @@
-const { createStore, applyMiddleware } = require('redux');
-
+const { createStore, applyMiddleware } = require('redux')
 
 const logger = store => next => action => {
   console.log('dispatching', action)
@@ -12,49 +11,47 @@ const defaultState = {
   courses: [
     {
       name: 'Learning React',
-      topic: 'React',
+      topic: 'React'
     },
     {
       name: 'Learning Angular',
-      topic: 'Angular',
+      topic: 'Angular'
     },
     {
       name: 'Using Redux with Angular',
-      topic: 'Angular',
+      topic: 'Angular'
     }
   ]
-};
+}
 
-function reducer(state, action) {
+function reducer (state, action) {
   switch (action.type) {
     case 'ADD_COURSE':
       return Object.assign({}, state, {
         courses: [...state.courses, action.course]
-      });
+      })
     default:
-      return state;
+      return state
   }
 }
 
-const store = createStore(reducer, defaultState, applyMiddleware(logger));
+const store = createStore(reducer, defaultState, applyMiddleware(logger))
 
-
-function addView(viewFunc) {
-  viewFunc(store.getState());
+function addView (viewFunc) {
+  viewFunc(store.getState())
 
   store.subscribe(() => {
-    viewFunc(store.getState());
+    viewFunc(store.getState())
   })
 }
 
 addView((state) => {
-  console.log(`There are ${state.courses.length} courses in the library`);
-});
+  console.log(`There are ${state.courses.length} courses in the library`)
+})
 
 addView((state) => {
-  console.log(`The latest course in the library: ${state.courses[state.courses.length -1].name}`);
-});
-
+  console.log(`The latest course in the library: ${state.courses[state.courses.length - 1].name}`)
+})
 
 store.dispatch({
   type: 'ADD_COURSE',
@@ -62,4 +59,4 @@ store.dispatch({
     name: 'This is the new course',
     topic: 'Really does not matter'
   }
-});
+})
